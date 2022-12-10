@@ -1,0 +1,228 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --ff-heading: 'Epilogue', sans-serif; /* A criação de variáveis permite atribuir características comuns a um escopo. O nome da variável pode ser qualquer um, desde que mantenha
+    a formatação "--nome: valor" */
+    --ff-texting: 'Open sans', sans-serif;
+
+    --bg-primary: hsl(var(--hue), 22%, 20%);
+    --fc-primary: hsl(var(--hue), 0%, 100%);
+    --fc-secondary: hsl(var(--hue), 50%, 80%); /*O modo de cor HSL (Hue - matiz, S - saturação e L - lumination) permite maior flexibilidade para manipular
+    a cor que se deseja aplicar, pois é possível alterar individualmente os atributos da mesma. */
+    --fc-secondary-dark: hsl(var(--hue), 100%, 11%);
+
+    --hue: 250; /* Como a matiz de 250 é comum para ambas as variáveis de cor, cria-se uma variável para a matiz e aplica-a aos códigos HSL */
+
+    font-size: 62.5%;
+    --fs-body: 1.6rem;
+    --fs-heading: 4rem;
+}
+
+body{
+    font-family: var(--ff-texting);
+    background-color: var(--bg-primary);
+    color: var(--fc-primary);
+}
+
+.page{
+    max-width: 33rem;
+    margin: 0 auto;
+}
+
+
+img{
+    width: 100%; /*A aplicação deste comando impede que a imagem "transborde" sobre a largura da página já especificada no body */
+    height: auto;
+}
+
+header{
+    margin: 10rem 0 8rem;
+    font-family: var(--ff-heading);
+
+    text-align: center;
+    
+    animation-name: topdown;
+    animation-duration: 700ms;
+    animation-fill-mode: backwards;
+    animation-timing-function: ease;
+    
+    /*Existem ainda demais propriedades que podem ser alteradas nas animações, como:
+    
+    animation-direction: reverse --> irá reproduzir a animação de forma reversa;
+
+    animation-iteration-count: infinite --> irá reproduzir repetidamente a animação;
+
+    animation-play-state: paused/running --> irá definir o estado de reprodução da animação (sendo reproduzida ou pausada). Esse comando
+    pode ser associado ao :hover, de forma que quando o usuário passar o mouse sobre o elemento, a animação se inicie. */
+
+}
+
+header p{
+    color: var(--fc-secondary);
+    text-transform: uppercase;
+    
+    font-size: var(--fs-body);
+    font-weight: 400;
+    letter-spacing: 3px;
+    line-height: 3.2rem;
+    
+    margin-bottom: 1.7rem;
+    
+}
+
+header h1{
+    font-weight: 800;
+    font-size: var(--fs-heading);
+    line-height: 4.8rem;
+}
+
+main{
+    display: grid;
+    gap: 3.2rem;
+
+    animation: downtop 700ms 0.35s backwards; /*Esse comando trata-se de uma forma mais objetiva de definir as propriedades da animação aplicada */
+}
+
+.card{
+    position: relative;
+    font-family: var(--ff-heading);
+}
+
+.card img{
+    height: 41.6rem;
+    object-fit: cover; /*A aplicação dessas propriedades, além de dimensionar a altura da caixa que conterá a imagem, posiciona a imagem no espaço 
+    indicado. Existem forma diferentes de fazer esse posicionamento.*/
+    border-radius: 6px;
+    
+    /*Abaixo, tem-se uma forma mais precisa de configurar a animação da imagem. 
+    transition-property: transform;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out; 
+    */
+
+    /* transition: transform 0.5s; Neste caso, a transition será aplicada somente ao transform. Para aplicar o transition a TODAS as animações ou
+    alterações no display da imagem, aplica-se o "all", como visto abaixo: */
+
+    transition: all 0.5s;
+
+    filter: brightness(0.5); /* O css apresenta uma série de filtros que podem ser aplicados na imagem. Para explorá-los, vale a pena testá-los a partir do devtools do navegador! */
+}
+
+.card img:hover{
+    transform: scale(1.1); /* O transform irá aumentar a escala da imagem após o cursor passar por cima dela. Esse comando ativará a propriedade transition
+    do .card img{} */
+    opacity: 1;
+    filter: brightness(1);
+}
+
+.card h2{
+    position: absolute;
+    bottom: 5.2rem;
+    left: 2.8rem;
+    
+    font-size: 4rem;
+    font-weight: 800;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 2.8rem;
+}
+
+.card h2 span{
+    display: inline-flex; /*O <span>, por padrão, não permite a aplicação de algumas propriedades como height, provenientes do display: block. Para isso,
+    é possível alterar seu display para inline-flex a fim de configurar o posicionamento do texto com align-items. */
+    align-items: center;
+
+    border-radius: 2rem;
+    background-color: var(--fc-primary);
+    
+    font-size: var(--fs-body);
+    font-weight: 400;
+    color: var(--fc-secondary-dark);
+    
+    padding: 0 1.6rem;
+    height: 3.8rem;
+    width: fit-content; /*A aplicação desse comando garante que a largura do <span> seja aplicada de acordo com a extensão do conteúdo. */
+}
+
+/* A partir daqui, serão criadas as ANIMAÇÕES para a página. Lembre-se que, até este ponto, está sendo desenvolvida a versão mobile dessa página. */
+
+/* @keyframes se trata de configurar a alteração da propriedade de um elemento do HTML de acordo com o tempo da animação, sendo 0% o início
+da reprodução da animação e 100% o fim. É possível configurar diversas propriedades do elemento, como a posição, opacidade, dimensões etc. É
+importante ter em mente que a animação acontecerá e que, após o final de sua reprodução, o elemento HTML retornará à sua aparência padrão de acordo
+com a configuração realizada no css. Para fazer com que o elemento adquira uma nova característica que se mantenha a partir do fim da animação,
+usa-se a propriedade animation-fill-mode. */
+@keyframes topdown{ /* "topdown" é o nome da animação, que poderá ser aplicada a qualquer elemento da página. */
+    0%{
+        opacity: 0;
+        transform: translateY(-105px); /* Essa configuração altera a movimentação do elemento no eixo Y. Ou seja, ao início da animação (0%), o elemento está 105px acima 
+        da posição estabelecida no css */
+    }
+
+    100%{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/*Vale lembrar que é preciso definir qual a animação que será reproduzida, associando o animation-name ao nome definido no @keyframes */
+
+
+@keyframes downtop{
+    0%{
+        opacity: 0;
+        transform: translateY(105px);
+    }
+
+    100%{
+        opacity: 1;
+        transform: translateY(0); 
+    }
+}
+
+@media(min-width: 700px){
+    main{
+        grid-template-columns: 1fr 1fr;
+    }
+        
+    .page{
+        max-width: 117rem;
+        padding: 0 5rem;
+        margin-bottom: 5rem;
+    }
+
+}
+
+@media (min-width: 930px){ 
+
+    main{
+        grid-template-columns: 3fr 1fr 3fr;
+        grid-template-areas: "A B B"
+        "C C D"
+        "E E E";
+    }
+
+    main > div:nth-child(1){
+        grid-area: A;
+    }
+
+    main > div:nth-child(2){
+        grid-area: B;
+    }
+
+    main > div:nth-child(3){
+        grid-area: C;
+    }
+
+    main > div:nth-child(4){
+        grid-area: D;
+    }
+
+    main > div:nth-child(5){
+        grid-area: E;
+    }
+
+}
